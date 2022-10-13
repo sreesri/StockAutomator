@@ -1,0 +1,1 @@
+This jupiter notebook counts the number or PE and CE stocks per row

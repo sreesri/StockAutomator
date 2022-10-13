@@ -1,8 +1,11 @@
 import csv
+import os
 import sys
+from glob import glob
+
 
 def convert(rawfile,outputFile):
-    # 'C:/Users/shrir/Downloads/2022 APR NIFTY.txt'
+
     with open(rawfile, newline='') as f:
         reader = csv.reader(f)
         data = list(reader)
@@ -40,12 +43,19 @@ def convert(rawfile,outputFile):
 def createOutputFile(filename:str):
     name=filename.split('.')[0]
     name+=' 5mins.txt'
-    return name
+    folder_path, file_name = "/".join(name.split("/")[:-1]), name.split("/")[-1]
+    return folder_path + "/output/" + file_name
 
 
+def createOutputDirectory(input_path):
+    os.makedirs(input_path + "/output/")
 
-if __name__=='__main__':
-    input = sys.argv[1]
-    output = createOutputFile(input)
-    print(input,output)
-    convert(input,output)
+
+if __name__ == '__main__':
+    input_path = sys.argv[1]
+    createOutputDirectory(input_path)
+    for a_file in glob(input_path + "*.txt"):
+        if a_file[-4:] == ".txt" and 'NIFTY' in a_file:
+            output_file = createOutputFile(a_file)
+            print(a_file, output_file)
+            convert(a_file, output_file)
