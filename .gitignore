@@ -1,4 +1,6 @@
-
+*.csv
 .DS_Store
 .idea
+
+PE_CE_Count/data/
 
